@@ -1,5 +1,9 @@
 const config = require("../config");
+const flowEngine = require("../core/flowEngine");
 const cmdInfos = require("./cmd_infos");
+const commands = require("./loader");
+// 🧠 ADMIN HANDLER
+const adminHandler = require("./admin/admin_handler");
 
 function getText(message) {
     return (
@@ -11,15 +15,15 @@ function getText(message) {
     );
 }
 
+
 module.exports = async function handleCommands({
     sock,
     message,
-    commands
 }) {
 
     try {
 
-        const text = getText(message).trim();
+        const text = getText(message)?.trim();
         if (!text) return;
 
         if (!text.startsWith(config.prefix)) return;
@@ -30,11 +34,15 @@ module.exports = async function handleCommands({
             .slice(config.prefix.length)
             .trim();
 
-        const args = body.split(" ");
+        const args = body.split(" ").filter(Boolean);
 
-        const commandName = args.shift().toLowerCase();
+        const commandName = (args.shift() || "").toLowerCase();
 
         const command = commands.get(commandName);
+
+        // ======================
+        // ❌ COMMANDE INCONNUE
+        // ======================
 
         if (!command) {
 
@@ -49,7 +57,7 @@ module.exports = async function handleCommands({
         const infos = cmdInfos[commandName];
 
         // ======================
-        // 📘 HELP AUTOMATIQUE
+        // 📘 HELP AUTO
         // ======================
 
         if (
@@ -75,7 +83,7 @@ ${config.prefix}${commandName} infos`
         }
 
         // ======================
-        // 📚 DETAILS
+        // 📚 INFOS DÉTAILLÉES
         // ======================
 
         if (
@@ -101,6 +109,32 @@ ${infos.details.map(d => `• ${d}`).join("\n")}`
             });
         }
 
+        // ======================
+        // 👑 ADMIN REDIRECTION
+        // ======================
+
+        const adminCommands = [
+            "root",
+            "none",
+            "sudo",
+            "planif"
+        ];
+
+        if (adminCommands.includes(commandName)) {
+
+            return await adminHandler({
+                sock,
+                message,
+                commands,
+                commandName,
+                args
+            });
+        }
+
+        // ======================
+        // ⚙️ EXECUTION NORMALE
+        // ======================
+
         return await command.execute({
             sock,
             sender,
@@ -111,6 +145,16 @@ ${infos.details.map(d => `• ${d}`).join("\n")}`
 
     } catch (err) {
 
-        console.log("HANDLER ERROR:", err);
-    }
+    console.log("❌ HANDLER ERROR:", err);
+
+    await sock.sendMessage(
+        message.key.remoteJid,
+        {
+            text:
+`❌ Une erreur est survenue.
+
+Consultez les logs du bot.`
+        }
+    );
+}
 };

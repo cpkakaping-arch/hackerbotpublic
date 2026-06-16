@@ -23,10 +23,18 @@ ${config.prefix}image → génération d'image IA
 🎥 VIDÉO
 ${config.prefix}video → génération vidéo IA
 
+👑 ADMIN
+${config.prefix}admin → informations du créateur
+${config.prefix}contact → contacter l'administrateur
+
 ⚡ UTILITAIRES
 ${config.prefix}ping → test réseau
 ${config.prefix}info → infos bot
 ${config.prefix}salut → message accueil
+
+📩 CONTACT
+${config.prefix}contact votre_message
+→ envoyer un message directement à l'admin
 
 📚 AIDE AVANCÉE
 

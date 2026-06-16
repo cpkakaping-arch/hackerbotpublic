@@ -1,15 +1,19 @@
-const { GoogleGenAI } = require("@google/genai");
+ const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
 
 async function run() {
-    const res = await ai.models.list();
+    try {
+        const res = await ai.models.list();
 
-    console.log("🔥 MODELES DISPONIBLES:\n");
+        console.log("🔥 MODELES OK");
+        console.log(res.pageInternal?.slice(0, 5)); // petit aperçu
 
-    console.log(res); // <-- IMPORTANT
+    } catch (err) {
+        console.error("❌ ERREUR API:", err.message);
+    }
 }
 
 run();

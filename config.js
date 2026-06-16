@@ -9,27 +9,32 @@ module.exports = {
 
     prefix: "@",
 
-    botName: "Open Formation Bot",
+    botName: "Hacker Bot",
 
     creator: "Hacker Génie",
 
     org: "Area Reform (Open Formation)",
 
-    debug: true,
-
     geminiApiKey: process.env.GEMINI_API_KEY,
 
-    geminiModel: "gemini-2.5-flash",
+    geminiModel: "gemini-3.5-flash",
+
+    adminNumber: "33759214464@s.whatsapp.net",
+
+    adminName: "dieson parfait",
+
+    adminLid: "205875633496113@lid",
+
+    debug: true,
 
     version: "1.0.0",
 
-        
     paths: 
     {
 
         commands: "./commands",
 
-        adminCommands: "./commands/admin_commands",
+        adminCommands: "./commands/admin",
 
         database: "./database",
 

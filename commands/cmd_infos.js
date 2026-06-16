@@ -126,6 +126,26 @@ module.exports = {
         ]
     },
 
+contact: {
+    advanced: true,
+
+    description:
+"Permet de contacter directement l'administrateur du bot.",
+
+    format:
+`${config.prefix}contact votre_message`,
+
+    example:
+`${config.prefix}contact Bonjour admin`,
+
+    details: [
+        "Envoie un message privé à l'administrateur",
+        "Transmet le nom de l'utilisateur",
+        "Transmet l'identifiant WhatsApp",
+        "Permet de contacter le support du bot"
+    ]
+},
+
     // ======================
     // 🤖 SALUTATION
     // ======================
@@ -147,6 +167,26 @@ module.exports = {
             "Accueille l'utilisateur"
         ]
     },
+
+admin: {
+    advanced: false,
+
+    description:
+"Affiche les informations du créateur du bot.",
+
+    format:
+`${config.prefix}admin`,
+
+    example:
+`${config.prefix}admin`,
+
+    details: [
+        "Affiche le numéro WhatsApp du créateur",
+        "Affiche les réseaux sociaux",
+        "Permet de contacter l'administrateur",
+        "Affiche les informations officielles du bot"
+    ]
+},
 
     // ======================
     // 📖 HELP

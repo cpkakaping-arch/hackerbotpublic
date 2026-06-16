@@ -52,51 +52,97 @@ for (const file of files) {
 
 async function startBot() {
 
-    console.log(`🚀 ${config.botName} STARTING...`);
+console.log(`🚀 ${config.botName} STARTING...`);
 
-    const { state, saveCreds } =
-        await useMultiFileAuthState("./auth");
+const { state, saveCreds } =
+    await useMultiFileAuthState("./auth");
 
-    const sock = makeWASocket({
+let isConnected = false; // 🔥 évite double connexion
 
-        auth: state,
+const sock = makeWASocket({
 
-        logger: pino({ level: "silent" }),
+    auth: state,
+    logger: pino({ level: "silent" }),
 
-        browser: [
-            config.botName,
-            "Chrome",
-            "1.0.0"
-        ]
-    });
+    printQRInTerminal: false, // 🔥 on gère QR nous-mêmes
 
-    sock.ev.on("creds.update", saveCreds);
+    browser: [
+        config.botName,
+        "Chrome",
+        "1.0.0"
+    ]
+});
 
-    sock.ev.on("connection.update", (update) => {
+// ======================
+// 💾 SAUVEGARDE SESSION
+// ======================
+sock.ev.on("creds.update", saveCreds);
 
-        const { connection, lastDisconnect } = update;
+// ======================
+// 📡 CONNECTION HANDLER
+// ======================
+sock.ev.on("connection.update", (update) => {
 
-        if (connection === "open") {
+    const { connection, lastDisconnect, qr } = update;
 
-            console.log("✅ BOT CONNECTÉ");
-            console.log(`🏢 ${config.org}`);
+    // ======================
+    // 📱 QR CODE (UNIQUEMENT SI PAS CONNECTÉ)
+    // ======================
+    if (qr && !isConnected) {
+        console.log("\n📱 SCAN CE QR CODE :\n");
 
-            clearTerminal();
+        const qrcode = require("qrcode-terminal");
+        qrcode.generate(qr, { small: true });
+    }
+
+    // ======================
+    // ✅ CONNECTÉ
+    // ======================
+    if (connection === "open") {
+
+        isConnected = true;
+
+        console.log("\n✅ BOT CONNECTÉ");
+        console.log(`🏢 ${config.org}`);
+
+        clearTerminal();
+    }
+
+    // ======================
+    // ❌ DÉCONNEXION
+    // ======================
+    if (connection === "close") {
+
+        isConnected = false;
+
+        const statusCode =
+            lastDisconnect?.error?.output?.statusCode;
+
+        const shouldReconnect =
+            statusCode !== DisconnectReason.loggedOut;
+
+        console.log("❌ Connexion fermée:", statusCode);
+
+        if (shouldReconnect) {
+
+            console.log("🔄 Reconnexion...");
+
+            setTimeout(() => {
+                startBot(); // relance propre
+            }, 3000);
+
+        } else {
+            console.log("🛑 Logout détecté → supprimer auth/");
         }
+    }
 
-        if (connection === "close") {
-
-            const shouldReconnect =
-                lastDisconnect?.error?.output?.statusCode !==
-                DisconnectReason.loggedOut;
-
-            console.log("❌ Connexion fermée");
-
-            if (shouldReconnect) {
-                startBot();
-            }
-        }
-    });
+    // ======================
+    // 🔄 CONNECTING STATE
+    // ======================
+    if (connection === "connecting") {
+        console.log("🔄 Connexion en cours...");
+    }
+});
 
     sock.ev.on("messages.upsert", async ({ messages }) => {
 

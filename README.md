@@ -98,24 +98,66 @@ Bot WhatsApp avancé basé sur **Baileys + Gemini AI**, conçu pour automatiser 
 # 📁 Structure du projet
 
 ```
-baileys-bot/
+hacker_bot/
 │
-├── auth/                  # session WhatsApp
-├── commands/             # commandes bot
-│   ├── ai.js
-│   ├── ping.js
-│   ├── help.js
-│   ├── info.js
-│   ├── salut.js
-│   ├── menu.js
-│   ├── handler.js
-│   └── cmd_infos.js     # documentation des commandes
+├── auth/                         # 🔐 session WhatsApp Baileys
+hacker_bot/
 │
-├── index.js             # point d'entrée principal
-├── config.js            # configuration globale
-├── package.json
-├── .env
-└── README.md
+├── commands/
+│   │
+│   ├── admin/                    # 👑 système admin
+│   │   ├── admin_handler.js
+│   │   ├── none.js
+│   │   ├── planif_engine.js
+│   │   ├── planif.js
+│   │   ├── root.js
+│   │   └── sudo.js
+│   │
+│   ├── system/                   # 🧠 CORE SYSTEM
+│   │   ├── profile.js           # 👤 gestion profil user
+│   │   ├── save.js              # 💾 sauvegarde données
+│   │   ├── startup.js           # 🔥 initialisation bot
+│   │   └── target.js            # 🎯 logique user/groupe
+│   │
+│   ├── admin.js                 # ⚙️ commandes admin global
+│   ├── ai.js                    # 🤖 IA
+│   ├── cmd_infos.js            # 📚 infos commandes
+│   ├── contact.js              # 📇 contacts
+│   ├── handler.js              # ⚡ routeur principal commandes
+│   ├── help.js                 # 📘 aide
+│   ├── image.js                # 🖼️ génération image
+│   ├── infos.js                # ℹ️ infos bot
+│   ├── loader.js               # 📦 chargeur de commandes
+│   ├── menu.js                 # 📜 menu principal
+│   ├── ping.js                 # 📡 test latence
+│   ├── salut.js                # 👋 test simple
+│   ├── test.js                 # 🧪 debug
+│   ├── video.js                # 🎥 outils vidéo
+│   └── testcontact.txt         # 🧾 fichier test (à supprimer si inutile)
+│
+├── core/
+│   └── flowEngine.js           # 🧠 moteur principal du bot
+│
+├── database/
+│   │
+│   ├── commands/
+│   │   └── planif/
+│   │       └── planif.json     # 📅 données planification
+│   │
+│   └── users/
+│       ├── startup_session.json # 🔐 session startup
+│       └── users.json          # 👥 base utilisateurs
+│
+├── utils/
+│   ├── startup_manager.js       # ⚙️ gestion démarrage
+│   └── user_manager.js         # 👤 gestion users
+│
+├── config.js                   # ⚙️ configuration globale
+├── index.js                    # 🚀 point d’entrée du bot
+├── package.json                # 📦 dépendances npm
+├── package-lock.json
+├── README.md                   # 📘 documentation projet
+└── tets.js                     # ⚠️ fichier test (probablement typo)
 ```
 
 ---
@@ -125,7 +167,7 @@ baileys-bot/
 ## 1. Cloner le projet
 
 ```bash
-git clone https://github.com/cpkakaping-arch/hackerbotpublic.git
+git clone https://github.com/cpkakaping-arch/hacker_bot.git
 cd hacker_bot
 ```
 

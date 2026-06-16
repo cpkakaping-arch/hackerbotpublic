@@ -1,0 +1,25 @@
+{
+    "205875633496113@lid": {
+        "name": "Cédric",
+        "username": "Hacker Génie",
+        "pushName": "dieson parfait",
+
+        "number": "33759214464",
+        "jid": "33759214464@s.whatsapp.net",
+        "lid": "205875633496113@lid",
+
+        "role": "admin",
+
+        "profile": true,
+
+        "createdAt": "2026-06-01",
+
+        "settings": {
+            "ai": true,
+            "notifications": "all",
+            "language": "fr"
+        },
+
+        "groups": []
+    }
+}
