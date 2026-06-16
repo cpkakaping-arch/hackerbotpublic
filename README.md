@@ -4,7 +4,7 @@ Voici un **README.md complet, propre et professionnel** pour ton bot WhatsApp Ba
 
 ---
 
-# 🤖 Open Formation Bot
+# 🤖 Hacker Bot
 
 Bot WhatsApp avancé basé sur **Baileys + Gemini AI**, conçu pour automatiser les conversations, gérer les groupes et fournir une intelligence artificielle intégrée.
 
@@ -167,8 +167,8 @@ hacker_bot/
 ## 1. Cloner le projet
 
 ```bash
-git clone https://github.com/cpkakaping-arch/hacker_bot.git
-cd hacker_bot
+git clone https://github.com/cpkakaping-arch/hackerbotpublic.git
+cd hackerbotpublic
 ```
 
 ---
@@ -181,10 +181,10 @@ npm install
 
 ---
 
-## 3. Configuration `.env`
+## 3. Configuration `Key API`
 
 ```env
-GEMINI_API_KEY=ton_api_key_ici
+export GEMINI_API_KEY=ton_api_key_ici
 ```
 
 ---
@@ -388,23 +388,3 @@ ping: {
 
 ---
 
-# ⭐ Objectif du projet
-
-Créer un **bot WhatsApp intelligent complet**, capable de :
-
-* répondre comme une IA moderne
-* gérer des groupes automatiquement
-* évoluer comme une plateforme (Meta AI-like)
-* rester modulaire et scalable
-
----
-
-# 📌 Conclusion
-
-Ce bot est conçu comme une base solide pour devenir :
-
-👉 un assistant IA WhatsApp complet
-👉 un système automatisé de gestion de groupes
-👉 une plateforme évolutive multi-modules
-
----
